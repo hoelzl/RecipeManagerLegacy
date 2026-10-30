@@ -17,7 +17,9 @@ def format_recipe(recipe: Recipe) -> str:
         out += "tags: " + ", ".join(recipe.tags) + "\n"
     out += "\nIngredients:\n"
     for ing in recipe.ingredients:
-        if ing.unit == "":
+        if ing.amount is None:
+            out += "  - " + ing.name + "\n"
+        elif ing.unit == "":
             if ing.amount == 1:
                 out += "  - " + str(int(ing.amount)) + " " + ing.name + "\n"
             else:

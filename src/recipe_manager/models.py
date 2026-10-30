@@ -4,7 +4,8 @@ from dataclasses import dataclass, field
 @dataclass
 class Ingredient:
     name: str
-    amount: float
+    # None for unquantified ingredients such as "salt to taste".
+    amount: float | None
     unit: str = ""
 
 
@@ -23,7 +24,10 @@ class Recipe:
             title=self.title,
             servings=servings,
             ingredients=[
-                Ingredient(i.name, i.amount * factor, i.unit) for i in self.ingredients
+                Ingredient(
+                    i.name, None if i.amount is None else i.amount * factor, i.unit
+                )
+                for i in self.ingredients
             ],
             tags=list(self.tags),
             instructions=list(self.instructions),
