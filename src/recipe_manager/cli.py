@@ -49,7 +49,7 @@ def cmd_substitute(args: argparse.Namespace) -> int:
 
 
 def cmd_import(args: argparse.Namespace) -> int:
-    recipe = parse_recipe_text(Path(args.file).read_text(encoding="utf-8"))
+    recipe = parse_recipe_text(Path(args.file).read_text(encoding="utf-8-sig"))
     print(format_recipe(recipe))
     return 0
 

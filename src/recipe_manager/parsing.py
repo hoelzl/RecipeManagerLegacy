@@ -16,28 +16,56 @@ The text format looks like this::
     - Fry until golden.
 """
 
+import re
+
 from recipe_manager.models import Ingredient, Recipe
+
+BOM = "\ufeff"  # byte-order mark some editors put at the start of a file
+
+# Units recognised after the amount; anything else is part of the name.
+UNITS = {
+    "g", "kg", "mg", "ml", "cl", "dl", "l",
+    "tsp", "tbsp", "cup", "cups", "oz", "lb",
+    "pinch", "clove", "cloves", "slice", "slices",
+}
+
+
+def parse_amount(text: str) -> float:
+    """Parse ``"2"``, ``"0.5"``, ``"1/2"`` or a mixed number such as ``"1 1/2"``."""
+    total = 0.0
+    for part in text.split():
+        if "/" in part:
+            numerator, denominator = part.split("/", 1)
+            total += float(numerator) / float(denominator)
+        else:
+            total += float(part)
+    return total
+
+
+def _is_number(token: str) -> bool:
+    return re.fullmatch(r"\d+(\.\d+)?|\d+/[1-9]\d*", token) is not None
 
 
 def parse_ingredient(line: str) -> Ingredient:
-    """Parse a single ingredient line such as ``"200 g flour"`` or ``"3 eggs"``."""
+    """Parse an ingredient line such as ``"200 g flour"``, ``"1 1/2 cups milk"``,
+    ``"3 eggs"`` or ``"salt to taste"`` (no amount: ``amount`` is ``None``)."""
     text = line.strip()
     if not text:
         raise ValueError("empty ingredient line")
     tokens = text.split()
-    # The first token is expected to be the amount.
-    amount = float(tokens[0])
-    rest = tokens[1:]
-    # A short alphabetic token right after the amount is treated as a unit.
-    if rest and rest[0].isalpha() and len(rest[0]) <= 4:
+    count = 0
+    while count < len(tokens) and _is_number(tokens[count]):
+        count += 1
+    if count == 0:
+        return Ingredient(name=text, amount=None)
+    amount = parse_amount(" ".join(tokens[:count]))
+    rest = tokens[count:]
+    if len(rest) > 1 and rest[0].lower() in UNITS:
         unit = rest[0]
         name = " ".join(rest[1:])
     else:
         unit = ""
         name = " ".join(rest)
-    if not name:
-        name = unit
-        unit = ""
     return Ingredient(name=name, amount=amount, unit=unit)
 
 
@@ -49,7 +77,7 @@ def parse_recipe_text(text: str) -> Recipe:
     ingredients: list[Ingredient] = []
     instructions: list[str] = []
     section = ""
-    for raw in text.splitlines():
+    for raw in text.removeprefix(BOM).splitlines():
         line = raw.strip()
         if not line:
             continue
