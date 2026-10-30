@@ -89,3 +89,19 @@ Each step ends with `uv run tools/check.py` green and its own commit.
 ## Risks
 - Calorie numbers are rough (ml ≈ g, cup sizes, piece weights) — the output says "approx." and lists what was not counted.
 - Making `Ingredient.amount` optional touches every user of `amount` (`report`, `pantry`, `models.scaled_to`, `storage`); mypy will point them out.
+
+## Implementation notes
+
+Implemented in steps 1–8 (see `git log`). Differences from the plan above:
+
+- `Ingredient.amount` became optional already in step 1, because the JSON loader
+  needs it for ingredients without an amount.
+- Units are now recognised from a fixed list (`g`, `ml`, `cup`, `tbsp`, `clove`, …)
+  instead of "any word of up to four letters", so `2 big onions` keeps its name.
+- The calorie CSV is not inside the package. The command uses
+  `data/ingredient_calories.en.csv` relative to the current folder when it exists
+  (true in the project folder and in the Docker image), otherwise `--calories`, and
+  without either it prints a note and leaves calories out.
+- The renderers live in one module, `cookbook_render.py`.
+- `data/recipes.json` and `data/pancakes.txt` both contain "Pancakes", so passing
+  both to `recipes cookbook` is rejected by the duplicate-title rule.

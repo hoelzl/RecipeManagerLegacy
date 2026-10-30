@@ -21,6 +21,10 @@ checkout and preserve the work you already reviewed.
 - `src/recipe_manager/storage.py` — load / save recipes as JSON
 - `src/recipe_manager/substitutions.py` — suggest ingredient substitutions
 - `src/recipe_manager/report.py` — render a recipe as a text report
+- `src/recipe_manager/formatting.py` — format amounts and ingredient lines (`7.5 g`, `1 1/2 cups`)
+- `src/recipe_manager/calories.py` — estimate calories per serving from a kcal-per-100-g table
+- `src/recipe_manager/cookbook.py` — arrange recipes into chapters by first tag
+- `src/recipe_manager/cookbook_render.py` — render a cookbook as Markdown or HTML
 - `src/recipe_manager/shopping.py` — shopping-list building blocks
 - `src/recipe_manager/analytics.py` — small collection metrics
 - `src/recipe_manager/meal_plans.py` — meal-plan representation (selection is missing)
@@ -40,11 +44,22 @@ uv run recipes show data/recipes.json               # print all recipes
 uv run recipes scale data/recipes.json "Pancakes" 8 # scale a recipe to 8 servings
 uv run recipes substitute butter                    # suggest substitutions
 uv run recipes import data/pancakes.txt             # import a recipe from text
+uv run recipes cookbook data/recipes.json data/waffles.txt -o cookbook.html
+                                                    # cookbook as HTML (or .md; stdout if no -o)
 uv run tools/check.py                               # full check: lint, types, tests
 uv run pytest -q                                    # only the tests
 uv run ruff check src tests                         # only lint
 uv run mypy src tests                               # only the type-check
 ```
+
+`recipes cookbook` accepts any mix of `.json` collections and `.txt` recipes. Each
+recipe appears once, in the chapter of its first tag (untagged recipes go to
+"Other"). Calories come from `data/ingredient_calories.en.csv` when run from the
+project folder, or from `--calories FILE`; they are approximate (volumes counted as
+water, typical piece weights) and list the ingredients that could not be counted.
+Options: `--title`, `--format md|html`. A recipe title that appears in two input
+files is an error — `data/recipes.json` and `data/pancakes.txt` both contain
+"Pancakes".
 
 The local MCP fixture in `tools/kitchen_service.py` exposes `list_menu`,
 `get_inventory`, `quote_recipe`, and `reserve_recipe`. Lettuce is deliberately scarce,
