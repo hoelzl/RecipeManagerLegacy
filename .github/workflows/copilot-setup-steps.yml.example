@@ -1,0 +1,29 @@
+# Setup steps for the Copilot cloud agent (inert template).
+#
+# To use it, rename it to .github/workflows/copilot-setup-steps.yml and commit it on
+# the repository's default branch - the agent only picks it up from there.
+# The job MUST be called copilot-setup-steps. Only steps, permissions, runs-on,
+# services, snapshot and timeout-minutes may be customized (timeout max: 59).
+name: "Copilot Setup Steps"
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.3.0
+
+      - name: Install the project with its dev tools (pytest, ruff, mypy)
+        run: uv sync --extra dev

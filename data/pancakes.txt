@@ -1,0 +1,12 @@
+Title: Pancakes
+Servings: 4
+Tags: breakfast, sweet
+Ingredients:
+- 200 g flour
+- 1/2 cup sugar
+- 3 eggs
+- salt to taste
+Instructions:
+- Mix the dry ingredients.
+- Whisk in the eggs and milk.
+- Fry until golden.

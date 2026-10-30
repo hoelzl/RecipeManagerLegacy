@@ -1,0 +1,7 @@
+---
+applyTo: "tests/**/*.py"
+---
+- Always use pytest as testing framework
+- Include parametrized tests for edge cases
+- One behavior per test; name tests after the behavior they pin down
+- Mock external API calls with pytest-mock

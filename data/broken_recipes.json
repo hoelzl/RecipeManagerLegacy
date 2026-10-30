@@ -1,0 +1,43 @@
+[
+  {
+    "title": "Pancakes",
+    "servings": 4,
+    "ingredients": [
+      { "name": "flour", "amount": 200, "unit": "g" },
+      { "name": "milk", "amount": 300, "unit": "ml" },
+      { "name": "eggs", "amount": 2, "unit": "" }
+    ],
+    "tags": ["breakfast", "sweet"],
+    "instructions": [
+      "Mix the dry ingredients.",
+      "Whisk in the eggs and milk.",
+      "Fry until golden."
+    ]
+  },
+  {
+    "title": "Omelette",
+    "ingredients": [
+      { "name": "eggs", "amount": 3, "unit": "" },
+      { "name": "butter", "amount": 10, "unit": "g" }
+    ],
+    "tags": ["breakfast", "vegetarian"],
+    "instructions": [
+      "Whisk the eggs.",
+      "Melt the butter and cook the eggs over low heat."
+    ]
+  },
+  {
+    "title": "Garlic Bread",
+    "servings": 2,
+    "ingredients": [
+      { "name": "baguette", "amount": 1, "unit": "" },
+      { "name": "garlic", "unit": "cloves" },
+      { "name": "butter", "amount": 50, "unit": "g" }
+    ],
+    "tags": ["snack", "vegetarian"],
+    "instructions": [
+      "Mix the crushed garlic with the butter.",
+      "Spread on the sliced baguette and bake."
+    ]
+  }
+]

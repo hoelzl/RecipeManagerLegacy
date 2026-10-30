@@ -1,0 +1,22 @@
+---
+name: prepare-pr
+description: Summarize the staged changes as a PR description. Use when asked to prepare, draft, or write a pull request description for staged changes.
+disable-model-invocation: true
+---
+Run exactly these commands with the terminal tool:
+
+1. `git diff --cached --stat`
+2. `git diff --cached`
+
+If a command fails or there are no staged changes, stop and report the evidence gap —
+do not invent a summary.
+
+Otherwise draft a PR description with:
+
+- **Title** (one line)
+- **What changed** (bullets, each traceable to the diff)
+- **How to test**
+- **Risks / follow-ups**
+
+Cite the staged diff for every claim. Do not edit, stage, commit, push, or open a
+pull request.

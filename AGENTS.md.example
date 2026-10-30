@@ -1,0 +1,38 @@
+# RecipeManagerLegacy — Project Guide
+
+Small command-line recipe manager in Python. This is the canonical project entry
+point; tool-specific adapters (`.github/copilot-instructions.md`, etc.) point here
+instead of copying these facts.
+
+## Layout
+
+- `src/recipe_manager/` — the package
+  - `models.py` — `Ingredient` and `Recipe` dataclasses
+  - `parsing.py`, `storage.py` — recipe text format and JSON load/save
+  - `report.py`, `cli.py` — output and entry point
+  - `analytics.py`, `catalog.py`, `meal_plans.py`, `pantry.py`, `shopping.py`,
+    `exports.py` — feature modules
+- `tests/` — pytest tests
+- `data/` — sample recipes (`recipes.json`, `pancakes.txt`)
+- `tools/` — MCP kitchen-service fixture
+
+## Commands
+
+```bash
+uv sync --extra dev           # once: install with dev tooling
+uv run tools/check.py         # the check: lint, type-check, tests
+uv run pytest -q              # tests only, while iterating
+```
+
+Definition of done: `uv run tools/check.py` green, with its output in your report.
+`uv run ruff format --check src tests` still flags a few legacy files — they get
+formatted in a separate commit; until then, do not reformat files you were not asked
+to change.
+
+## Conventions
+
+- Type hints on all public functions; docstrings on public APIs
+- Prefer dataclasses over dicts; `pathlib` over `os.path`
+- New behavior lands test-first: write the failing test, then implement
+- Keep functions small; the legacy long functions are refactoring targets,
+  not a style to imitate

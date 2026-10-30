@@ -1,0 +1,10 @@
+# Copilot Instructions
+
+Follow the project guide in [AGENTS.md](../AGENTS.md) for layout, commands, and
+conventions. Do not duplicate those facts here.
+
+## Copilot-specific mechanics
+
+- Plan before editing: explore the relevant module, propose a short plan, then implement
+- Work in small, reviewable steps; stop after each step for review
+- Run the gate commands from `AGENTS.md` before declaring a change done

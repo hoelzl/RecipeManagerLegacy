@@ -1,0 +1,33 @@
+[
+  {
+    "title": "Pancakes",
+    "servings": 4,
+    "ingredients": [
+      { "name": "flour", "amount": 200, "unit": "g" },
+      { "name": "milk", "amount": 300, "unit": "ml" },
+      { "name": "eggs", "amount": 2, "unit": "" },
+      { "name": "sugar", "amount": 30, "unit": "g" }
+    ],
+    "tags": ["breakfast", "sweet"],
+    "instructions": [
+      "Mix the dry ingredients.",
+      "Whisk in the eggs and milk.",
+      "Fry until golden."
+    ]
+  },
+  {
+    "title": "Tomato Soup",
+    "servings": 2,
+    "ingredients": [
+      { "name": "tomatoes", "amount": 500, "unit": "g" },
+      { "name": "onion", "amount": 1, "unit": "" },
+      { "name": "cream", "amount": 100, "unit": "ml" }
+    ],
+    "tags": ["lunch", "vegetarian"],
+    "instructions": [
+      "Fry the onion.",
+      "Add the tomatoes and simmer.",
+      "Blend and stir in the cream."
+    ]
+  }
+]

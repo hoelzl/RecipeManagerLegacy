@@ -1,0 +1,36 @@
+[project]
+name = "recipe-manager-legacy"
+version = "0.1.0"
+description = "A small command-line recipe manager."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5", "mypy>=1.10"]
+
+[project.scripts]
+recipes = "recipe_manager.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/recipe_manager"]
+
+[tool.ruff]
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+# In a dev container on a Windows drive every file looks executable, so EXE002
+# (executable file without shebang) would flag every file. Not a code problem.
+extend-ignore = ["EXE002"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.uv]
+# Only allow packages published before this date (supply-chain safety).
+# It also keeps uv from applying a parent folder's uv settings to this project.
+exclude-newer = "2026-10-04T00:00:00Z"

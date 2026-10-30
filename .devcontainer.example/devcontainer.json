@@ -1,0 +1,35 @@
+// Dev container for RecipeManagerLegacy: the environment you WORK in.
+// Inert under this name. To use it: rename the folder `.devcontainer.example`
+// to `.devcontainer`, then run "Dev Containers: Reopen in Container".
+//
+// What the container protects: your other files and programs on the host.
+// What it does not protect: this project folder (mounted read-write, .git
+// included), the git credentials VS Code forwards (and your SSH agent, if one
+// runs), and the network. Commit before an agent session; keep secrets out of the folder.
+// Give this folder its own git repository: inside another repository, VS Code
+// mounts that repository's root, not just this folder. Troubleshooting: README.
+{
+    "name": "RecipeManagerLegacy",
+    "image": "mcr.microsoft.com/devcontainers/python:3.12",
+
+    // The virtual environment lives outside the mounted folder, so it never
+    // clashes with a .venv you created on Windows or macOS.
+    "containerEnv": {
+        "UV_PROJECT_ENVIRONMENT": "/home/vscode/.venv"
+    },
+    "postCreateCommand": {
+        // Files mounted from a Windows drive appear to belong to root;
+        // without this, git refuses to work ("dubious ownership").
+        "git": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+        "deps": "pip install --user uv && ~/.local/bin/uv sync --extra dev"
+    },
+
+    "customizations": {
+        "vscode": {
+            "extensions": ["GitHub.copilot-chat", "ms-python.python"],
+            "settings": {
+                "python.defaultInterpreterPath": "/home/vscode/.venv/bin/python"
+            }
+        }
+    }
+}

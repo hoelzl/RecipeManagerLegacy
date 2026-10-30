@@ -1,0 +1,12 @@
+﻿Title: Waffles
+Servings: 2
+Tags: breakfast, sweet
+Ingredients:
+- 250 g flour
+- 400 ml milk
+- 2 tbsp sugar
+- 60 g butter
+Instructions:
+- Melt the butter.
+- Whisk everything into a smooth batter.
+- Bake in the waffle iron until crisp.
